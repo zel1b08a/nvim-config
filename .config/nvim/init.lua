@@ -19,9 +19,10 @@ require("plugins.toggleterm")
 require("plugins.which-key")
 require("plugins.ufo")
 
-require("plugins.themes.monokai-pro")
 require("plugins.themes.bluloco")
-require("plugins.themes.witch")
+require("plugins.themes.eldritch")
+require("plugins.themes.monokai-pro")
 require("plugins.themes.neosolarized")
+require("plugins.themes.witch")
 
 require("core.colors")
