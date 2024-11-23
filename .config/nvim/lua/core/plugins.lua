@@ -27,7 +27,16 @@ require("lazy").setup({
     { 'hrsh7th/cmp-cmdline' },
     { 'hrsh7th/nvim-cmp' },
     { 'williamboman/mason.nvim' },
-    { 'nvim-telescope/telescope.nvim',  tag = '0.1.6',                                dependencies = { 'nvim-lua/plenary.nvim' } },
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.6',
+        dependencies = { 'nvim-lua/plenary.nvim', {
+            "nvim-telescope/telescope-live-grep-args.nvim",
+            -- This will not install any breaking changes.
+            -- For major updates, this must be adjusted manually.
+            version = "^1.0.0",
+        } }
+    },
     { 'jose-elias-alvarez/null-ls.nvim' },
     { 'windwp/nvim-autopairs' },
     { 'akinsho/bufferline.nvim',        version = "*",                                dependencies = 'nvim-tree/nvim-web-devicons' },
@@ -38,7 +47,7 @@ require("lazy").setup({
     { 'akinsho/toggleterm.nvim' },
     { 'folke/which-key.nvim' },
     { 'kevinhwang91/promise-async' },
-    { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' },
+    { 'kevinhwang91/nvim-ufo',          requires = 'kevinhwang91/promise-async' },
     -- colorschemes
     { 'joshdick/onedark.vim' },
     { 'loctvl842/monokai-pro.nvim' },
