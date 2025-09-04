@@ -1,2 +1,2 @@
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("bluloco")
+vim.cmd.colorscheme("eldritch")
