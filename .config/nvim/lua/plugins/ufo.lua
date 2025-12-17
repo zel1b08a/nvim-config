@@ -1,13 +1,13 @@
 require("ufo").setup({
     open_fold_hl_timeout = 150,
     close_fold_kinds_for_ft = {
-        default = {"imports", "comment"},
-        json = {"array"},
-        c = {"comment", "region"}
+        default = { "imports", "comment" },
+        json = { "array" },
+        c = { "comment", "region" }
     },
     preview = {
         win_config = {
-            border = {"", "─", "", "", "", "─", "", ""},
+            border = { "", "─", "", "", "", "─", "", "" },
             winhighlight = "Normal:Folded",
             winblend = 0
         },
@@ -21,7 +21,7 @@ require("ufo").setup({
 })
 
 local function selectProviderWithChainByDefault()
-    local ftMap = {vim = "indent", python = "indent", git = ""}
+    local ftMap = { vim = "indent", python = "indent", git = "" }
 
     ---@param bufnr number
     ---@return Promise
@@ -52,12 +52,12 @@ local function peekOrHover()
     local winid = require("ufo").peekFoldedLinesUnderCursor()
     if winid then
         local bufnr = vim.api.nvim_win_get_buf(winid)
-        local keys = {"a", "i", "o", "A", "I", "O", "gd", "gr"}
+        local keys = { "a", "i", "o", "A", "I", "O", "gd", "gr" }
         for _, k in ipairs(keys) do
             -- Add a prefix key to fire `trace` action,
             -- if Neovim is 0.8.0 before, remap yourself
             vim.keymap.set("n", k, "<CR>" .. k,
-                           {noremap = false, buffer = bufnr})
+                { noremap = false, buffer = bufnr })
         end
     else
         -- coc.nvim
@@ -96,7 +96,7 @@ local handler = function(virtText, lnum, endLnum, width, truncate, ctx)
     local totalLines = vim.api.nvim_buf_line_count(0)
     local foldedLines = endLnum - lnum
     local suffix = ("  %d %d%%"):format(foldedLines,
-                                           foldedLines / totalLines * 100)
+        foldedLines / totalLines * 100)
     local sufWidth = vim.fn.strdisplaywidth(suffix)
     local targetWidth = width - sufWidth
     local curWidth = 0
@@ -109,12 +109,12 @@ local handler = function(virtText, lnum, endLnum, width, truncate, ctx)
         else
             chunkText = truncate(chunkText, targetWidth - curWidth)
             local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
+            table.insert(newVirtText, { chunkText, hlGroup })
             chunkWidth = vim.fn.strdisplaywidth(chunkText)
             -- str width returned from truncate() may less than 2nd argument, need padding
             if curWidth + chunkWidth < targetWidth then
                 suffix = suffix ..
-                             (" "):rep(targetWidth - curWidth - chunkWidth)
+                    (" "):rep(targetWidth - curWidth - chunkWidth)
             end
             break
         end
@@ -122,17 +122,17 @@ local handler = function(virtText, lnum, endLnum, width, truncate, ctx)
     end
 
     local rAlignAppndx = math.max(math.min(vim.opt.textwidth["_value"],
-                                           width - 1) - curWidth - sufWidth, 0)
+        width - 1) - curWidth - sufWidth, 0)
     suffix = (" "):rep(rAlignAppndx) .. suffix
 
-    table.insert(newVirtText, {suffix, "MoreMsg"})
+    table.insert(newVirtText, { suffix, "MoreMsg" })
 
     return newVirtText
 end
 
 local function customizeFoldText()
     -- global handler
-    require("ufo").setup({fold_virt_text_handler = handler})
+    require("ufo").setup({ fold_virt_text_handler = handler })
 end
 
 local function customizeBufFoldText()
@@ -149,7 +149,7 @@ local function inspectVirtTextForFoldedLines()
                                           truncate, ctx)
             for i = lnum, endLnum do
                 print("lnum: ", i, ", virtText: ",
-                      vim.inspect(ctx.get_fold_virt_text(i)))
+                    vim.inspect(ctx.get_fold_virt_text(i)))
             end
             return virtText
         end

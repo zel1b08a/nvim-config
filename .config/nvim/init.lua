@@ -1,6 +1,6 @@
-require("core.mappings")
 require("core.plugins")
 require("core.configs")
+require("core.mappings")
 
 require("plugins.lsp")
 require("plugins.mason")

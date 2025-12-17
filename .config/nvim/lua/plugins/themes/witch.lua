@@ -71,8 +71,8 @@ require("witch").setup({
         -- the last active window retains its status as the main window
         -- and should not be dimmed upon switching.
         excluded = {
-            filetypes = {NvimTree = true},
-            buftypes = {nofile = true, prompt = true, terminal = true}
+            filetypes = { NvimTree = true },
+            buftypes = { nofile = true, prompt = true, terminal = true }
         }
     },
 

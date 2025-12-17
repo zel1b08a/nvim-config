@@ -13,7 +13,8 @@ null_ls.setup({
             args = {
                 "--indent-type", "Spaces", "--indent-width", "4", "$FILENAME"
             }
-        }), -- null_ls.builtins.diagnostics.ltrs,
+        }),
+        null_ls.builtins.diagnostics.ltrs,
         null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.prettierd.with({
             filetypes = {
@@ -24,7 +25,7 @@ null_ls.setup({
     },
     on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_clear_autocmds({group = augroup, buffer = bufnr})
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 group = augroup,
                 buffer = bufnr,
@@ -35,7 +36,7 @@ null_ls.setup({
                             return client.name == "null-ls"
                         end
                     })
-                    -- vim.lsp.buf.formatting_sync()
+                    vim.lsp.buf.formatting_sync()
                 end
             })
         end

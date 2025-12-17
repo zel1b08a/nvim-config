@@ -3,14 +3,14 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 vim.lsp.config('pyright', {})
-vim.lsp.config('ts_ls', {capabilities = capabilities})
+vim.lsp.config('ts_ls', { capabilities = capabilities })
 vim.lsp.config('prismals', {})
 vim.lsp.config('cssls', {})
 vim.lsp.config('golangci_lint_ls', {})
 vim.lsp.config('rust_analyzer', {
     settings = {
         ["rust-analyzer"] = {
-            diagnostics = {enable = true, experimental = {enable = true}}
+            diagnostics = { enable = true, experimental = { enable = true } }
         }
     }
 })
@@ -19,17 +19,19 @@ vim.lsp.config('lua_ls', {
     on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.loop.fs_stat(path .. "/.luarc.json") or
-            vim.loop.fs_stat(path .. "/.luarc.jsonc") then return end
+            vim.loop.fs_stat(path .. "/.luarc.jsonc") then
+            return
+        end
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config
-                                                             .settings.Lua, {
-            runtime = {version = "LuaJIT"},
-            workspace = {
-                checkThirdParty = false,
-                library = {vim.env.VIMRUNTIME}
-            }
-        })
+            .settings.Lua, {
+                runtime = { version = "LuaJIT" },
+                workspace = {
+                    checkThirdParty = false,
+                    library = { vim.env.VIMRUNTIME }
+                }
+            })
     end,
-    settings = {Lua = {}}
+    settings = { Lua = {} }
 })
 vim.lsp.config('bashls', {})
 vim.lsp.config('cmake', {})
@@ -44,7 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-        local opts = {buffer = ev.buf}
+        local opts = { buffer = ev.buf }
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
@@ -55,8 +57,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- vim.keymap.set('n', '<Leader>sl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
         -- vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set("n", "<Leader>lr", vim.lsp.buf.rename, opts)
-        vim.keymap.set({"n", "v"}, "<Leader>la", vim.lsp.buf.code_action, opts)
-        vim.keymap.set({"n", "v"}, "<Leader>lf",
-                       function() vim.lsp.buf.format({async = true}) end, opts)
+        vim.keymap.set({ "n", "v" }, "<Leader>la", vim.lsp.buf.code_action, opts)
+        vim.keymap.set({ "n", "v" }, "<Leader>lf",
+            function() vim.lsp.buf.format({ async = true }) end, opts)
     end
 })
+
+vim.api.nvim_create_user_command('FormatProjectGit', function()
+    local function format_project()
+        local handle = io.popen("git ls-files")
+        local result = handle:read("*a")
+        handle:close()
+
+        for line in result:gmatch("[^\r\n]+") do
+            vim.cmd("edit " .. line)
+            vim.lsp.buf.format({ async = false })
+            vim.cmd("write")
+        end
+    end
+    format_project()
+end, {})
