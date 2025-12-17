@@ -18,6 +18,7 @@ require("plugins.symbols-outline")
 require("plugins.toggleterm")
 require("plugins.which-key")
 require("plugins.ufo")
+require("plugins.mini.icons")
 
 require("plugins.themes.bluloco")
 require("plugins.themes.eldritch")
