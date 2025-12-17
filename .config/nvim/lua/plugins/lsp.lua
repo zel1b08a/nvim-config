@@ -2,22 +2,20 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local lspconfig = require("lspconfig")
-
-lspconfig.pyright.setup({})
-lspconfig.ts_ls.setup({})
-lspconfig.prismals.setup({})
-lspconfig.cssls.setup({capabilities = capabilities})
-lspconfig.golangci_lint_ls.setup({})
-lspconfig.rust_analyzer.setup({
+vim.lsp.config('pyright', {})
+vim.lsp.config('ts_ls', {capabilities = capabilities})
+vim.lsp.config('prismals', {})
+vim.lsp.config('cssls', {})
+vim.lsp.config('golangci_lint_ls', {})
+vim.lsp.config('rust_analyzer', {
     settings = {
         ["rust-analyzer"] = {
             diagnostics = {enable = true, experimental = {enable = true}}
         }
     }
 })
-lspconfig.clangd.setup({})
-lspconfig.lua_ls.setup({
+vim.lsp.config('clangd', {})
+vim.lsp.config('lua_ls', {
     on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.loop.fs_stat(path .. "/.luarc.json") or
@@ -33,10 +31,10 @@ lspconfig.lua_ls.setup({
     end,
     settings = {Lua = {}}
 })
-lspconfig.bashls.setup({})
-lspconfig.cmake.setup({})
-lspconfig.docker_compose_language_service.setup({})
-lspconfig.yamlls.setup({})
+vim.lsp.config('bashls', {})
+vim.lsp.config('cmake', {})
+vim.lsp.config('docker_compose_language_service', {})
+vim.lsp.config('yamlls', {})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
