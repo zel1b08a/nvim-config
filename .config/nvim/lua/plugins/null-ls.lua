@@ -3,19 +3,13 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.eslint_d.with({
-            filetypes = {
-                "typescript", "javascript", "typescriptreact", "javascriptreact"
-            }
-        }), null_ls.builtins.formatting.lua_format,
-        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.formatting.lua_format,
         null_ls.builtins.formatting.stylua.with({
             args = {
                 "--indent-type", "Spaces", "--indent-width", "4", "$FILENAME"
             }
         }),
         null_ls.builtins.diagnostics.ltrs,
-        null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.prettierd.with({
             filetypes = {
                 "css", "scss", "less", "html", "json", "jsonc", "yaml",
