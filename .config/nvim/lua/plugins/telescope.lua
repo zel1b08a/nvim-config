@@ -13,4 +13,5 @@ vim.keymap.set("n", "<leader>ls", builtin.lsp_document_symbols, {})
 vim.keymap.set("n", "gr", builtin.lsp_references, { noremap = true, silent = true })
 vim.keymap.set("n", "gd", builtin.lsp_definitions, { noremap = true, silent = true })
 
+require("telescope").load_extension("fzf")
 require("telescope").load_extension("live_grep_args")
